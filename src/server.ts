@@ -7,7 +7,11 @@ let server: Server;
 
 const startServer = async () => {
 	try {
-		await mongoose.connect(envVars.DB_URL);
+		if (envVars.NODE_ENV === "production") {
+			await mongoose.connect(envVars.DB_URL);
+		} else {
+			await mongoose.connect(envVars.DB_URL_LOCAL);
+		}
 
 		console.log("✅ Connected to DB");
 
