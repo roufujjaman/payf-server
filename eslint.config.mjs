@@ -9,7 +9,7 @@ export default defineConfig(
     tseslint.configs.stylistic,
     {
         rules: {
-            "no-consoel": "warn"
+            "no-console": "warn"
         }
     }
 );
