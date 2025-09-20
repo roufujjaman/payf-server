@@ -3,6 +3,9 @@ interface EnvConfig {
 	DB_URL: string;
 	DB_URL_LOCAL: string;
 	NODE_ENV: "development" | "production";
+	BCRYPT_SALT_ROUND: string;
+	JWT_ACCESS_SECRET: string;
+	JWT_ACCESS_EXPIRES: string;
 }
 
 const loadEnvVariables = (): EnvConfig => {
@@ -11,6 +14,9 @@ const loadEnvVariables = (): EnvConfig => {
 		"DB_URL",
 		"DB_URL_LOCAL",
 		"NODE_ENV",
+		"BCRYPT_SALT_ROUND",
+		"JWT_ACCESS_SECRET",
+		"JWT_ACCESS_SECRET",
 	];
 
 	requiredEnvVariables.forEach((key) => {
@@ -24,6 +30,9 @@ const loadEnvVariables = (): EnvConfig => {
 		DB_URL: process.env.DB_URL as string,
 		DB_URL_LOCAL: process.env.DB_URL_LOCAL as string,
 		NODE_ENV: process.env.NODE_ENV as "development" | "production",
+		BCRYPT_SALT_ROUND: process.env.BCRYPT_SALT_ROUNT as string,
+		JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET as string,
+		JWT_ACCESS_EXPIRES: process.env.JWT_ACCESS_EXPIRES as string,
 	};
 };
 

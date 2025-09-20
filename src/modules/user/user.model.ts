@@ -38,7 +38,7 @@ const userSchema = new Schema<IUser>(
 
 		auths: {
 			type: [authProviderSchema],
-			required: true,
+			// required: true,
 			// validate: {
 			// 	validator: (v) => {
 			// 		return v.length > 0;
