@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import { Server } from "http";
 import { app } from "./app";
 import mongoose from "mongoose";
 import { envVars } from "./config/env";
+import { seedSuperAdmin } from "./utils/seedSuperAdmin";
 
 let server: Server;
 
@@ -37,6 +39,11 @@ process.on("unhandledRejection", (err) => {
 	process.exit(1);
 });
 
+(async () => {
+	await startServer();
+	await seedSuperAdmin();
+})();
+
 // uncaught exception error
 process.on("uncaughtException", (err) => {
 	console.log("❌ Server Shutting Down... uncaughtException detected... ", err);
@@ -47,7 +54,3 @@ process.on("uncaughtException", (err) => {
 
 	process.exit(1);
 });
-
-(async () => {
-	await startServer();
-})();

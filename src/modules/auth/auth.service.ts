@@ -1,8 +1,10 @@
 import bcryptjs from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
-import { envVars } from "../../config/env";
 import AppError from "../../errors/AppError";
-import { generateToken } from "../../utils/jwt";
+import {
+	createNewTokenWithRefreshToken,
+	createUserToken,
+} from "../../utils/userToken";
 import { IUser } from "../user/user.interface";
 import { User } from "../user/user.model";
 
@@ -22,19 +24,18 @@ const credentialLogin = async (payload: Partial<IUser>) => {
 	if (!isPasswordMatch) {
 		throw new AppError(StatusCodes.BAD_REQUEST, "User password does not match");
 	}
-	const jwtPayload = {
-		userId: user._id,
-		email: user.email,
-		role: user.role,
-	};
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const { password: hPassword, ...rest } = user.toObject();
 
-	const accessToken = generateToken(
-		jwtPayload,
-		envVars.JWT_ACCESS_SECRET,
-		envVars.JWT_ACCESS_EXPIRES
-	);
+	const { accessToken, refreshToken } = createUserToken(rest);
 
-	return { accessToken };
+	return { accessToken, refreshToken, user: rest };
 };
 
-export const AuthServices = { credentialLogin };
+const getNewAccessToken = async (refreshToken: string) => {
+	const token = await createNewTokenWithRefreshToken(refreshToken);
+
+	return token;
+};
+
+export const AuthServices = { credentialLogin, getNewAccessToken };

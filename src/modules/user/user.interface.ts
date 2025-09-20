@@ -19,6 +19,7 @@ export enum IIsActive {
 }
 
 export interface IUser {
+	_id?: string;
 	name: string;
 	email: string;
 	phone?: string;
@@ -28,7 +29,7 @@ export interface IUser {
 
 	isVarified: boolean;
 	isActive: IIsActive;
-	isDeleted: boolean;
+	isDeleted?: boolean;
 
 	auths: IAuthProvider[];
 	wallets?: Types.ObjectId[];

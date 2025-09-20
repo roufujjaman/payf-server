@@ -21,7 +21,7 @@ export const checkAuth =
 			if (!authRoles.includes(varifiedToken.role)) {
 				throw new AppError(StatusCodes.FORBIDDEN, "You are not authorized");
 			}
-
+			req.user = varifiedToken;
 			next();
 		} catch (error) {
 			next(error);
