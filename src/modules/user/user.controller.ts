@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
+import { JwtPayload } from "jsonwebtoken";
+import { envVars } from "../../config/env";
+import { catchAsync } from "../../utils/catchAsync";
+import { verifyToken } from "../../utils/jwt";
+import { sendResponse } from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
 import { StatusCodes } from "http-status-codes";
-import { sendResponse } from "../../utils/sendResponse";
-import { catchAsync } from "../../utils/catchAsync";
 
 const createUser = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
@@ -31,13 +34,21 @@ const getAllUsers = catchAsync(
 	}
 );
 
-const needImplment = (req: Request, res: Response, next: NextFunction) => {
-	sendResponse(res, {
-		statusCode: 200,
-		success: false,
-		message: `${req.url} needs to be implemented`,
-		data: null,
-	});
-};
+const updateUser = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const userId = req.params.id;
+		const payload = req.body;
+		const token = req.user;
 
-export const UserController = { createUser, getAllUsers, needImplment };
+		const user = await UserServices.updateUser(userId, payload, token);
+
+		sendResponse(res, {
+			statusCode: StatusCodes.ACCEPTED,
+			success: true,
+			message: "User updated successfully",
+			data: user,
+		});
+	}
+);
+
+export const UserController = { createUser, getAllUsers, updateUser };
