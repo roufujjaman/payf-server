@@ -24,6 +24,8 @@ export const createUserZodSchema = z.object({
 		.string("Address must be string")
 		.max(200, { error: "Address connot exceed 200 characters" })
 		.optional(),
+
+	// role: z.enum(Object.values(Role)).optional(),
 });
 
 export const updateUserZodSchema = z.object({

@@ -1,4 +1,4 @@
-import { Types } from "mongoose";
+import { Schema, Types } from "mongoose";
 
 export enum Role {
 	SUPER_ADMIN = "SUPER_ADMIN",
@@ -19,7 +19,7 @@ export enum IIsActive {
 }
 
 export interface IUser {
-	_id?: string;
+	_id?: Types.ObjectId;
 	name: string;
 	email: string;
 	phone?: string;
@@ -32,5 +32,5 @@ export interface IUser {
 	isDeleted?: boolean;
 
 	auths: IAuthProvider[];
-	wallets?: Types.ObjectId[];
+	wallets?: Schema.Types.ObjectId[];
 }

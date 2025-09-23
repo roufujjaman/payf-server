@@ -1,12 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
-import { JwtPayload } from "jsonwebtoken";
-import { envVars } from "../../config/env";
+import { StatusCodes } from "http-status-codes";
 import { catchAsync } from "../../utils/catchAsync";
-import { verifyToken } from "../../utils/jwt";
 import { sendResponse } from "../../utils/sendResponse";
 import { UserServices } from "./user.service";
-import { StatusCodes } from "http-status-codes";
 
 const createUser = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
