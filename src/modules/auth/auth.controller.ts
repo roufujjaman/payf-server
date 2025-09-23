@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
 import { AuthServices } from "./auth.service";
-import { StatusCodes } from "http-status-codes";
 
 const credentialLogin = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
