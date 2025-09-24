@@ -1,4 +1,4 @@
-import { Schema, Types } from "mongoose";
+import { Types } from "mongoose";
 
 export enum Role {
 	SUPER_ADMIN = "SUPER_ADMIN",
@@ -32,5 +32,5 @@ export interface IUser {
 	isDeleted?: boolean;
 
 	auths: IAuthProvider[];
-	wallets?: Schema.Types.ObjectId[];
+	wallets?: Types.ObjectId[];
 }
