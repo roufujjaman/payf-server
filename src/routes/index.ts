@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthRoutes } from "../modules/auth/auth.route";
 import { UserRoutes } from "../modules/user/user.route";
 import { WalletRoutes } from "../modules/wallet/wallet.route";
+import { TransactionRoutes } from "../modules/transaction/transaction.route";
 
 interface ModuleRouteObject {
 	path: string;
@@ -22,6 +23,10 @@ const moduleRoutes: ModuleRouteObject[] = [
 	{
 		path: "/wallet",
 		routes: WalletRoutes,
+	},
+	{
+		path: "/transaction",
+		routes: TransactionRoutes,
 	},
 ];
 
