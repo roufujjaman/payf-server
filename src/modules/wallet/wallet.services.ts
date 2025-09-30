@@ -1,11 +1,18 @@
 import { StatusCodes } from "http-status-codes";
-import AppError from "../../errors/AppError";
-import { IIsActive, IUser, Role } from "../user/user.interface";
-import { IWallet, WalletType } from "./wallet.interface";
 import { Types } from "mongoose";
+import AppError from "../../errors/AppError";
+import { IIsActive, Role } from "../user/user.interface";
+import { User } from "../user/user.model";
+import { IWallet, WalletType } from "./wallet.interface";
 import { Wallet } from "./wallet.model";
 
-const createWallet = async (user: IUser) => {
+const createWallet = async (userId: string) => {
+	const user = await User.findById(userId);
+
+	if (!user) {
+		throw new AppError(StatusCodes.BAD_REQUEST, "User not found");
+	}
+
 	if ([Role.ADMIN, Role.SUPER_ADMIN].includes(user.role)) {
 		throw new AppError(
 			StatusCodes.BAD_REQUEST,
@@ -20,7 +27,7 @@ const createWallet = async (user: IUser) => {
 	) {
 		throw new AppError(
 			StatusCodes.FORBIDDEN,
-			"You are not eligible to open a wallet"
+			`You can not opne a wallet right now. Your status {${user.isVarified}, ${user.isActive}, ${user.isDeleted}}`
 		);
 	}
 
@@ -31,6 +38,10 @@ const createWallet = async (user: IUser) => {
 	};
 
 	const wallet = await Wallet.create(payload);
+
+	user.wallets?.push(wallet._id);
+
+	await user.save();
 
 	return wallet;
 };

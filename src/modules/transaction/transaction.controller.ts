@@ -5,25 +5,17 @@ import { sendResponse } from "../../utils/sendResponse";
 import { StatusCodes } from "http-status-codes";
 import { User } from "../user/user.model";
 import AppError from "../../errors/AppError";
+import { TransactionServices } from "./transaction.service";
 
 const createTransaction = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { fromUserId, toUserId } = req.body;
-
-		const fromUser = await User.findById(fromUserId);
-		const toUser = await User.findById(toUserId);
-
-		if (!fromUser || !toUser) {
-			throw new AppError(StatusCodes.NOT_FOUND, "User not found");
-		}
-
-		console.log(fromUser, toUser);
+		const transaction = await TransactionServices.createTransaction(req);
 
 		sendResponse(res, {
 			statusCode: StatusCodes.CREATED,
 			success: true,
 			message: "Transaction successfull",
-			data: {},
+			data: transaction,
 		});
 	}
 );
