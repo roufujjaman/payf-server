@@ -9,7 +9,7 @@ export const checkAuth =
 	(...authRoles: string[]) =>
 	(req: Request, res: Response, next: NextFunction) => {
 		try {
-			const accessToken = req.headers.authorization;
+			const accessToken = req.cookies.accessToken;
 			if (!accessToken) {
 				throw new AppError(StatusCodes.FORBIDDEN, "Access token not found");
 			}

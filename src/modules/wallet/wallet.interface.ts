@@ -9,7 +9,7 @@ export interface IWallet {
 	_id?: Types.ObjectId;
 	userId: Types.ObjectId;
 	walletType: WalletType;
-	balance?: number;
+	balance: number;
 	totalBalance?: number;
 	lastTransaction?: Types.ObjectId | null;
 }
