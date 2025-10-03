@@ -9,7 +9,7 @@ import { WalletServices } from "./wallet.services";
 
 const createWallet = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
-		const { userId } = req.body;
+		const { userId } = req.user;
 
 		const wallet = await WalletServices.createWallet(userId);
 
@@ -22,4 +22,21 @@ const createWallet = catchAsync(
 	}
 );
 
-export const WalletContollers = { createWallet };
+const deleteWallet = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const { walletId } = req.body;
+
+		// eslint-disable-next-line no-console
+		console.log(walletId);
+		// const wallet = await WalletServices.deleteWallet(walletId);
+
+		sendResponse(res, {
+			statusCode: StatusCodes.ACCEPTED,
+			success: true,
+			message: "Wallet delete successfully",
+			data: {},
+		});
+	}
+);
+
+export const WalletContollers = { createWallet, deleteWallet };

@@ -31,7 +31,7 @@ const createWallet = async (userId: string) => {
 		);
 	}
 
-	const payload: IWallet = {
+	const payload: Partial<IWallet> = {
 		userId: user._id as Types.ObjectId,
 		walletType:
 			user.role === "USER" ? WalletType.PERSONAL : WalletType.BUSINESS,
@@ -46,6 +46,16 @@ const createWallet = async (userId: string) => {
 	return wallet;
 };
 
+const deleteWallet = async (walletId: string) => {
+	const wallet = await Wallet.findByIdAndDelete(walletId);
+	if (!wallet) {
+		throw new AppError(StatusCodes.BAD_REQUEST, "Can't delete the wallet");
+	}
+
+	return wallet;
+};
+
 export const WalletServices = {
 	createWallet,
+	deleteWallet,
 };
