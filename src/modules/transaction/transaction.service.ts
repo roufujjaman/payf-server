@@ -11,7 +11,6 @@ const createTransaction = async (req: Request) => {
 	const { userWalletId, recipientWalletId, amount } = req.body;
 	const { userId } = req.user;
 
-	console.log(userWalletId, recipientWalletId, amount, userId);
 	const user = await User.findById(userId);
 	if (!user) {
 		throw new AppError(StatusCodes.BAD_GATEWAY, "User not found");
