@@ -3,6 +3,10 @@ import { IIsActive, Role } from "./user.interface";
 
 export const createUserZodSchema = z.object({
 	name: z.string("Name must be string").min(4).max(50),
+	// name: z.object(
+	// 	{ fname: z.string("Name must be string").min(4).max(50) },
+	// 	{ error: "Name must containe firstname" }
+	// ),
 	email: z.email(),
 	password: z
 		.string()

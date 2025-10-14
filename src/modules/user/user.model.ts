@@ -38,13 +38,13 @@ const userSchema = new Schema<IUser>(
 
 		auths: {
 			type: [authProviderSchema],
-			// required: true,
-			// validate: {
-			// 	validator: (v) => {
-			// 		return v.length > 0;
-			// 	},
-			// 	message: "Atleast a single auth is required",
-			// },
+			required: true,
+			validate: {
+				validator: (v) => {
+					return v.length > 0;
+				},
+				message: "Atleast a single auth is required",
+			},
 		},
 		wallets: {
 			type: [Types.ObjectId],
